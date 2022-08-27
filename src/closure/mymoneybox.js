@@ -1,17 +1,37 @@
-function moneyBox(owner) {
-    let savedCoins = 0;
-    return (coins) => {
-        savedCoins += coins;
-        console.log(`${owner}'s' MoneyBox: $${savedCoins}`);
-    };
+/* Si creamos una alcancía de la siguiente manera, 
+solamente mostrará el valor enviado, no guardará 
+la información del dinero que le enviamos.
+ */
+
+// function alcancia(monedas){
+//     let contenido = 0
+//     contenido = contenido + monedas
+//     return contenido
+// }
+
+// const miAlcancia = alcancia
+// miAlcancia(5) // 5
+// miAlcancia(4) // 4
+
+/* 
+Si utilizamos un closure, entonces la variable en 
+que estará en un scope más elevado que la función 
+interior, recordará el ámbito léxico que fue creada. 
+Por lo tanto, cada vez que invoquemos cada función, 
+mostrará el dinero ahorrado en la alcancía.
+ */
+function alcancia(cantidadInicial){
+    let contenido = cantidadInicial
+    return function guardar(monedas){
+        contenido = contenido + monedas
+        return contenido
+    }
 }
 
-const juanMoneyBox = moneyBox("Juan");
-myMoneyBox(5);
-myMoneyBox(3);
-myMoneyBox(15);
+const miAlcancia = alcancia(2)
+miAlcancia(5) // 7
+miAlcancia(4) // 11
 
-const anaMoneyBox = moneyBox("Ana");
-pepitaMoneyBox(100);
-pepitaMoneyBox(100);
-pepitaMoneyBox(100);
+const otraAlcancia = alcancia(5)
+otraAlcancia(30) // 35
+otraAlcancia(20) // 55
